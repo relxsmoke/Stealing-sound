@@ -1,0 +1,1073 @@
+引入 android.widget. *
+引入 android.os. *
+引入 android.view. *
+引入 android.view.View. *
+引入 android.webkit. *
+引入 android.graphics. *
+引入 android.graphics.drawable. *
+引入 android.app. *
+引入 android.content. *
+引入 android.content.res. *
+引入 java.util. *
+引入 java.io. *
+引入 com.t1.cloud. *
+引入 com.t1.cloud.listener. *
+
+类 T1后端云 继承 组件
+
+   @java
+   private Context context;
+   @end
+
+   构造方法 T1后端云(上下文环境 为 安卓环境)
+      父对象(上下文环境)
+      context = 上下文环境
+   结束 方法
+
+   //常用方法====
+
+   //初始化T1后端云，需要传入key和token，在T1后端云后台获取
+   方法 初始化(key 为 文本型,token 为 文本型)
+      T1Cloud.initialize(context, key, token)
+   结束 方法
+
+   //注册账号，注册完毕后会触发注册成功或失败事件
+   方法 注册账号(账号 为 文本型,密码 为 文本型)
+      @java
+      // 新建一个 T1CloudRegister()
+      T1CloudRegister t1CloudRegister = new T1CloudRegister();
+      // 必填项
+      t1CloudRegister.put("user", 账号); // 账号
+      t1CloudRegister.put("pass", 密码); // 密码
+      // 非必填项
+      //t1CloudRegister.put("imei", "012703009237285"); // 设备识别码
+      //t1CloudRegister.put("custom", "custom");        // 自定义参数
+      //t1CloudRegister.put("invite", "user");          // 邀请码(用户账号)
+      t1CloudRegister.register(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 注册账号成功
+            挂接事件 注册成功(json);
+         }
+
+         @Override
+         public void onError(String error) {
+            // 注册账号失败
+            挂接事件 注册失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //注册账号，(设备识别码即imei，自定义参数为自己定义的参数，邀请码为用户账号)，这三个参数，若没有，则填空字符串，注册完毕后会触发注册成功或失败事件
+   方法 注册账号(账号 为 文本型,密码 为 文本型,设备识别码 为 文本型,自定义参数 为 文本型,邀请码 为 文本型)
+      @java
+      // 新建一个 T1CloudRegister()
+      T1CloudRegister t1CloudRegister = new T1CloudRegister();
+      // 必填项
+      t1CloudRegister.put("user", 账号); // 账号
+      t1CloudRegister.put("pass", 密码); // 密码
+      // 非必填项
+      if (!"".equals(设备识别码)) {
+         t1CloudRegister.put("imei", 设备识别码); // 设备识别码
+      }
+      if (!"".equals(自定义参数)) {
+         t1CloudRegister.put("custom", 自定义参数);        // 自定义参数
+      }
+      if (!"".equals(邀请码)) {
+         t1CloudRegister.put("invite", 邀请码);          // 邀请码(用户账号)
+      }
+      t1CloudRegister.register(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 注册账号成功
+            挂接事件 注册成功(json);
+         }
+
+         @Override
+         public void onError(String error) {
+            // 注册账号失败
+            挂接事件 注册失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //登录账号，登录完毕后会触发登录成功或失败事件
+   方法 登录账号(账号 为 文本型,密码 为 文本型)
+      @java
+      // 新建一个 T1CloudUser()
+      T1CloudUser t1CloudUser = new T1CloudUser();
+      // 必填项
+      t1CloudUser.put("user", 账号); // 账号
+      t1CloudUser.put("pass", 密码); // 密码
+      // 非必填项
+      //t1CloudUser.put("imei", "012703009237285"); // 设备识别码
+      t1CloudUser.login(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 登录账号成功
+            挂接事件 登录成功(json);
+         }
+         @Override
+         public void onError(String error) {
+            // 登录账号失败
+            挂接事件 登录失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //登录账号，(设备识别码即imei)，若没有，则填空字符串，登录完毕后会触发登录成功或失败事件
+   方法 登录账号(账号 为 文本型,密码 为 文本型,设备识别码 为 文本型,自定义参数 为 文本型,邀请码 为 文本型)
+      @java
+      // 新建一个 T1CloudUser()
+      T1CloudUser t1CloudUser = new T1CloudUser();
+      // 必填项
+      t1CloudUser.put("user", 账号); // 账号
+      t1CloudUser.put("pass", 密码); // 密码
+      // 非必填项
+      if (!"".equals(设备识别码)) {
+         t1CloudUser.put("imei", 设备识别码); // 设备识别码
+      }
+      t1CloudUser.login(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 登录账号成功
+            挂接事件 登录成功(json);
+         }
+         @Override
+         public void onError(String error) {
+            // 登录账号失败
+            挂接事件 登录失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //修改积分，第四个参数为操作备注，若没有，则填空字符串，修改完毕后会触发修改积分成功或失败事件
+   方法 修改积分(账号 为 文本型,密码 为 文本型,欲修改积分 为 文本型,操作备注 为 文本型)
+      @java
+      // 新建一个 T1CloudUser()
+      T1CloudUser t1CloudUser = new T1CloudUser();
+      // 必填项
+      t1CloudUser.put("user", 账号); // 账号
+      t1CloudUser.put("pass", 密码); // 密码
+      t1CloudUser.put("jf", 欲修改积分);    // 修改的积分数量
+      // 非必填项
+      if (!"".equals(操作备注)) {
+         t1CloudUser.put("msg", 操作备注); // 操作备注
+      }
+      t1CloudUser.integral(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 积分修改成功
+            挂接事件 修改积分成功(json);
+         }
+
+         @Override
+         public void onError(String error) {
+            // 积分修改失败
+            挂接事件 修改积分失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //修改余额，第四个参数为操作备注，若没有，则填空字符串，修改完毕后会触发修改余额成功或失败事件
+   方法 修改余额(账号 为 文本型,密码 为 文本型,欲修改余额 为 文本型,操作备注 为 文本型)
+      @java
+      // 新建一个 T1CloudUser()
+      T1CloudUser t1CloudUser = new T1CloudUser();
+      // 必填项
+      t1CloudUser.put("user", 账号); // 账号
+      t1CloudUser.put("pass", 密码); // 密码
+      t1CloudUser.put("money", 欲修改余额);    // 修改的积余额数量
+      // 非必填项
+      if (!"".equals(操作备注)) {
+         t1CloudUser.put("msg", 操作备注); // 操作备注
+      }
+      t1CloudUser.balance(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 余额修改成功
+            挂接事件 修改余额成功(json);
+         }
+
+         @Override
+         public void onError(String error) {
+            // 余额修改失败
+            挂接事件 修改余额失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //修改自定义参数，修改完毕后会触发修改自定义参数成功或失败事件
+   方法 修改自定义参数(账号 为 文本型,密码 为 文本型,自定义参数 为 文本型)
+      @java
+      // 新建一个 T1CloudUser()
+      T1CloudUser t1CloudUser = new T1CloudUser();
+      // 必填项
+      t1CloudUser.put("user", 账号); // 账号
+      t1CloudUser.put("pass", 密码); // 密码
+      t1CloudUser.put("custom", 自定义参数);    // 修改的自定义参数
+      t1CloudUser.custom(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 自定义参数修改成功
+            挂接事件 修改自定义参数成功(json);
+         }
+
+         @Override
+         public void onError(String error) {
+            // 自定义参数修改失败
+            挂接事件 修改自定义参数失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //修改密码，修改完毕后会触发修改密码成功或失败事件
+   方法 修改密码(账号 为 文本型,旧密码 为 文本型,新密码 为 文本型)
+      @java
+      // 新建一个 T1CloudUser()
+      T1CloudUser t1CloudUser = new T1CloudUser();
+      // 必填项
+      t1CloudUser.put("user", 账号); // 账号
+      t1CloudUser.put("pass", 旧密码); // 密码
+      t1CloudUser.put("newpass", 新密码);    // 修改的新密码
+      t1CloudUser.password(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 密码修改成功
+            挂接事件 修改密码成功(json);
+         }
+
+         @Override
+         public void onError(String error) {
+            // 密码修改失败
+            挂接事件 修改密码失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //每日签到，签到完毕后会触发每日签到成功或失败事件
+   方法 每日签到(账号 为 文本型,密码 为 文本型)
+      @java
+      // 新建一个 T1CloudUser()
+      T1CloudUser t1CloudUser = new T1CloudUser();
+      // 必填项
+      t1CloudUser.put("user", 账号); // 账号
+      t1CloudUser.put("pass", 密码); // 密码
+      t1CloudUser.sign(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 签到成功
+            挂接事件 每日签到成功(json);
+         }
+
+         @Override
+         public void onError(String error) {
+            // 签到失败
+            挂接事件 每日签到失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //余额兑换会员，兑换完毕后会触发兑换会员成功或失败事件
+   方法 余额兑换会员(账号 为 文本型,密码 为 文本型,兑换月数 为 文本型)
+      @java
+      // 新建一个 T1CloudUser()
+      T1CloudUser t1CloudUser = new T1CloudUser();
+      // 必填项
+      t1CloudUser.put("user", 账号); // 账号
+      t1CloudUser.put("pass", 密码); // 密码
+      t1CloudUser.put("num", 兑换月数);
+      t1CloudUser.changeMember(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 兑换成功
+            挂接事件 兑换会员成功(json);
+         }
+
+         @Override
+         public void onError(String error) {
+            // 兑换失败
+            挂接事件 兑换会员失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //余额兑换积分，兑换完毕后会触发兑换积分成功或失败事件
+   方法 余额兑换积分(账号 为 文本型,密码 为 文本型,兑换积分数 为 文本型)
+      @java
+      // 新建一个 T1CloudUser()
+      T1CloudUser t1CloudUser = new T1CloudUser();
+      // 必填项
+      t1CloudUser.put("user", 账号); // 账号
+      t1CloudUser.put("pass", 密码); // 密码
+      t1CloudUser.put("num", 兑换积分数);
+      t1CloudUser.changeIntegral(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 兑换成功
+            挂接事件 兑换积分成功(json);
+         }
+
+         @Override
+         public void onError(String error) {
+            // 兑换失败
+            挂接事件 兑换积分失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //抽奖，抽奖完毕后会触发抽奖成功或失败事件
+   方法 抽奖(账号 为 文本型,密码 为 文本型)
+      @java
+      // 新建一个 T1CloudUser()
+      T1CloudUser t1CloudUser = new T1CloudUser();
+      // 必填项
+      t1CloudUser.put("user", 账号); // 账号
+      t1CloudUser.put("pass", 密码); // 密码
+      t1CloudUser.lottery(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 抽奖成功
+            挂接事件 抽奖成功(json);
+         }
+
+         @Override
+         public void onError(String error) {
+            // 抽奖失败
+            挂接事件 抽奖失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //查询抽奖记录，查询完毕后会触发查询抽奖记录成功或失败事件
+   方法 查询抽奖记录(账号 为 文本型,密码 为 文本型)
+      @java
+      // 新建一个 T1CloudUser()
+      T1CloudUser t1CloudUser = new T1CloudUser();
+      // 必填项
+      t1CloudUser.put("user", 账号); // 账号
+      t1CloudUser.put("pass", 密码); // 密码
+      t1CloudUser.recordLottery(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 查询成功
+            挂接事件 查询抽奖记录成功(json);
+         }
+
+         @Override
+         public void onError(String error) {
+            // 查询失败
+            挂接事件 查询抽奖记录失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //查询余额记录，查询完毕后会触发查询余额记录成功或失败事件
+   方法 查询余额记录(账号 为 文本型,密码 为 文本型,当前页数 为 文本型,单页数据行数 为 文本型)
+      @java
+      // 新建一个 T1CloudUser()
+      T1CloudUser t1CloudUser = new T1CloudUser();
+      // 必填项
+      t1CloudUser.put("user", 账号); // 账号
+      t1CloudUser.put("pass", 密码); // 密码
+      t1CloudUser.put("nowpage", 当前页数);
+      t1CloudUser.put("pagenum", 单页数据行数);
+      t1CloudUser.recordBalance(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 查询成功
+            挂接事件 查询余额记录成功(json);
+         }
+
+         @Override
+         public void onError(String error) {
+            // 查询失败
+            挂接事件 查询余额记录失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //查询积分记录，查询完毕后会触发查询积分记录成功或失败事件
+   方法 查询积分记录(账号 为 文本型,密码 为 文本型,当前页数 为 文本型,单页数据行数 为 文本型)
+      @java
+      // 新建一个 T1CloudUser()
+      T1CloudUser t1CloudUser = new T1CloudUser();
+      // 必填项
+      t1CloudUser.put("user", 账号); // 账号
+      t1CloudUser.put("pass", 密码); // 密码
+      t1CloudUser.put("nowpage", 当前页数);
+      t1CloudUser.put("pagenum", 单页数据行数);
+      t1CloudUser.recordIntegral(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 查询成功
+            挂接事件 查询积分记录成功(json);
+         }
+
+         @Override
+         public void onError(String error) {
+            // 查询失败
+            挂接事件 查询积分记录失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //查询会员记录，查询完毕后会触发查询会员记录成功或失败事件
+   方法 查询会员记录(账号 为 文本型,密码 为 文本型,当前页数 为 文本型,单页数据行数 为 文本型)
+      @java
+      // 新建一个 T1CloudUser()
+      T1CloudUser t1CloudUser = new T1CloudUser();
+      // 必填项
+      t1CloudUser.put("user", 账号); // 账号
+      t1CloudUser.put("pass", 密码); // 密码
+      t1CloudUser.put("nowpage", 当前页数);
+      t1CloudUser.put("pagenum", 单页数据行数);
+      t1CloudUser.recordMember(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 查询成功
+            挂接事件 查询会员记录成功(json);
+         }
+
+         @Override
+         public void onError(String error) {
+            // 查询失败
+            挂接事件 查询会员记录失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //获取平台数据，如在线用户，活跃用户之类的，获取完毕后会触发获取平台数据成功或失败事件
+   方法 获取平台数据()
+      @java
+      // 新建一个 T1CloudObject()
+      T1CloudObject cloudObject = new T1CloudObject();
+      // 调用 getCloud() 方法
+      cloudObject.getCloud(new T1CloudListener() {
+         @Override
+         public void onDone(String json) {
+            // 获取平台数据成功
+            挂接事件 获取平台数据成功(json);
+         }
+         @Override
+         public void onError(String error) {
+            // 获取平台数据失败
+            挂接事件 获取平台数据失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //发起支付，支付方式有(qqpay:财付通支付，wxpay:微信支付，alipay:支付宝支付)，订单号和订单备注可填空字符串，发起支付后会触发发起支付成功或失败事件
+   方法 发起支付(支付方式 为 文本型,金额 为 文本型,订单号 为 文本型,订单备注 为 文本型)
+      @java
+      // 新建一个 T1CloudPay()
+      T1CloudPay t1CloudPay = new T1CloudPay();
+      // 必填项
+      t1CloudPay.put("paytype", 支付方式);  // 支付方式 (qqpay、wxpay、alipay)
+      t1CloudPay.put("money", 金额);      // 下单金额
+      // 非必填项
+      if (!"".equals(订单号)) {
+         t1CloudPay.put("orderid", 订单号);  // 订单号
+      }
+      if (!"".equals(订单备注)) {
+         t1CloudPay.put("paymsg", 订单备注);    // 订单备注
+      }
+      // 调用 initiatePay() 方法
+      t1CloudPay.initiatePay(new T1CloudListener() {
+         @Override 
+         public void onDone(String json) {
+            // 发起支付直接返回 http 链接，供开发者使用
+            挂接事件 发起支付成功(json);
+         }
+         @Override 
+         public void onError(String error) {
+            // 发起支付没有 onError()
+            挂接事件 发起支付失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //商品系统下单，支付方式有(qqpay:财付通支付，wxpay:微信支付，alipay:支付宝支付)，所有参数必填，下单后会触发商品系统下单成功或失败事件
+   方法 商品系统下单(支付方式 为 文本型,订单号 为 文本型,商品ID 为 文本型,商品参数 为 文本型)
+      @java
+      // 新建一个 T1CloudPay()
+      T1CloudPay t1CloudPay = new T1CloudPay();
+      // 必填项
+      t1CloudPay.put("paytype", 支付方式);  // 支付方式 (qqpay、wxpay、alipay)
+      t1CloudPay.put("orderid", 订单号);      // 订单号
+      t1CloudPay.put("goodsid", 商品ID);  // 商品ID
+      t1CloudPay.put("goodsval", 商品参数);    // 商品参数
+      t1CloudPay.documentPay(new T1CloudListener() {
+         @Override 
+         public void onDone(String json) {
+            // 发起支付直接返回 http 链接，供开发者使用
+            挂接事件 商品系统下单成功(json);
+         }
+         @Override 
+         public void onError(String error) {
+            // 发起支付没有 onError()
+            挂接事件 商品系统下单失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //商品系统下单，支付方式有(qqpay:财付通支付，wxpay:微信支付，alipay:支付宝支付)，所有参数必填，下单后会触发商品系统下单成功或失败事件
+   方法 商品系统下单(支付方式 为 文本型,订单号 为 文本型,商品ID 为 文本型,商品参数 为 文本型,下单备注 为 文本型)
+      @java
+      // 新建一个 T1CloudPay()
+      T1CloudPay t1CloudPay = new T1CloudPay();
+      // 必填项
+      t1CloudPay.put("paytype", 支付方式);  // 支付方式 (qqpay、wxpay、alipay)
+      t1CloudPay.put("orderid", 订单号);      // 订单号
+      t1CloudPay.put("goodsid", 商品ID);  // 商品ID
+      t1CloudPay.put("goodsval", 商品参数);    // 商品参数
+      t1CloudPay.put("paymsg", 下单备注);    // 下单备注
+      t1CloudPay.documentPay(new T1CloudListener() {
+         @Override 
+         public void onDone(String json) {
+            // 发起支付直接返回 http 链接，供开发者使用
+            挂接事件 商品系统下单成功(json);
+         }
+         @Override 
+         public void onError(String error) {
+            // 发起支付没有 onError()
+            挂接事件 商品系统下单失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //查询订单，查询完毕后会触发查询订单成功或失败事件
+   方法 查询订单(订单号 为 文本型)
+      @java
+      // 新建一个 T1CloudPay()
+      T1CloudPay t1CloudPay = new T1CloudPay();
+      // 必填项
+      t1CloudPay.put("orderid", 订单号); // 订单号
+      // 调用 recordOrderPay() 方法
+      t1CloudPay.recordOrderPay(new T1CloudListener() {
+         @Override 
+         public void onDone(String json) {
+            // 订单查询成功
+            挂接事件 查询订单成功(json);
+         }
+         @Override 
+         public void onError(String error) {
+            // 订单查询失败
+            挂接事件 查询订单失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //查询商品详情，查询完毕后会触发查询商品详情成功或失败事件
+   方法 查询商品详情(商品ID 为 文本型)
+      @java
+      // 新建一个 T1CloudPay()
+      T1CloudPay t1CloudPay = new T1CloudPay();
+      // 必填项
+      t1CloudPay.put("goodsid", 商品ID); // 商品ID
+      // 调用 recordOrderPay() 方法
+      t1CloudPay.recordDetailedPay(new T1CloudListener() {
+         @Override 
+         public void onDone(String json) {
+            // 查询成功
+            挂接事件 查询商品详情成功(json);
+         }
+         @Override 
+         public void onError(String error) {
+            // 查询失败
+            挂接事件 查询商品详情失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //查询自动发货，查询完毕后会触发查询自动发货成功或失败事件
+   方法 查询自动发货(订单号 为 文本型)
+      @java
+      // 新建一个 T1CloudPay()
+      T1CloudPay t1CloudPay = new T1CloudPay();
+      // 必填项
+      t1CloudPay.put("orderid", 订单号); // 订单号
+      // 调用 recordOrderPay() 方法
+      t1CloudPay.recordShipPay(new T1CloudListener() {
+         @Override 
+         public void onDone(String json) {
+            // 查询成功
+            挂接事件 查询自动发货成功(json);
+         }
+         @Override 
+         public void onError(String error) {
+            // 查询失败
+            挂接事件 查询自动发货失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //发送邮件，发件完毕后会触发邮箱发件成功或失败事件
+   方法 邮箱发件(邮件标题 为 文本型,邮件内容 为 文本型,收信邮箱 为 文本型)
+      @java
+      // 新建一个 T1CloudFeatures()
+      T1CloudFeatures t1CloudFeatures = new T1CloudFeatures();
+      // 必填项
+      t1CloudFeatures.put("title", 邮件标题);     // 邮件标题
+      t1CloudFeatures.put("text", 邮件内容);  // 邮件内容
+      t1CloudFeatures.put("who", 收信邮箱);      // 收件邮箱
+      // 调用 sendEmail() 方法
+      t1CloudFeatures.sendEmail(new T1CloudListener() {
+         @Override 
+         public void onDone(String json) {
+            // 邮箱发件成功
+            挂接事件 邮箱发件成功(json);
+         }
+
+         @Override 
+         public void onError(String error) {
+            // 邮箱发件失败
+            挂接事件 邮箱发件失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //获取云文档，获取完毕后会触发获取云文档成功或失败事件
+   方法 获取云文档(文档标识 为 文本型)
+      @java
+      // 新建一个 T1CloudFeatures()
+      T1CloudFeatures t1CloudFeatures = new T1CloudFeatures();
+      // 必填项
+      t1CloudFeatures.put("id", 文档标识); // 文档标识
+      // 调用 cloudDocument() 方法
+      t1CloudFeatures.cloudDocument(new T1CloudListener() {
+         @Override 
+         public void onDone(String json) {
+            // 获取云文档成功
+            挂接事件 获取云文档成功(json);
+         }
+
+         @Override 
+         public void onError(String error) {
+            // 获取云文档失败
+            挂接事件 获取云文档失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //在线PING，欲PING对象可以为域名，也可以为IP地址，PING完毕后会触发PING成功或失败事件
+   方法 在线PING(欲PING对象 为 文本型)
+      @java
+      // 新建一个 T1CloudFeatures()
+      T1CloudFeatures t1CloudFeatures = new T1CloudFeatures();
+      // 必填项
+      t1CloudFeatures.put("url", 欲PING对象); // PING对象
+      t1CloudFeatures.ping(new T1CloudListener() {
+         @Override 
+         public void onDone(String json) {
+            // 成功
+            挂接事件 PING成功(json);
+         }
+
+         @Override 
+         public void onError(String error) {
+            // 失败
+            挂接事件 PING失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //查询IP信息，查询完毕后会触发查询IP成功或失败事件
+   方法 查询IP信息(欲查询IP 为 文本型)
+      @java
+      // 新建一个 T1CloudFeatures()
+      T1CloudFeatures t1CloudFeatures = new T1CloudFeatures();
+      // 必填项
+      t1CloudFeatures.put("ip", 欲查询IP); // IP
+      t1CloudFeatures.ipQuery(new T1CloudListener() {
+         @Override 
+         public void onDone(String json) {
+            // 成功
+            挂接事件 查询IP成功(json);
+         }
+
+         @Override 
+         public void onError(String error) {
+            // 失败
+            挂接事件 查询IP失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //获取当前客户端IP，获取完毕后会触发取当前IP成功或失败事件
+   方法 取当前IP()
+      @java
+      // 新建一个 T1CloudFeatures()
+      T1CloudFeatures t1CloudFeatures = new T1CloudFeatures();
+      t1CloudFeatures.ipCloudQuery(new T1CloudListener() {
+         @Override 
+         public void onDone(String json) {
+            // 成功
+            挂接事件 取当前IP成功(json);
+         }
+
+         @Override 
+         public void onError(String error) {
+            // 失败
+            挂接事件 取当前IP失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //获取最近7天天气，获取完毕后会触发获取天气成功或失败事件
+   方法 获取天气(城市名 为 文本型)
+      @java
+      // 新建一个 T1CloudFeatures()
+      T1CloudFeatures t1CloudFeatures = new T1CloudFeatures();
+      // 必填项
+      t1CloudFeatures.put("city", 城市名); // 城市名
+      t1CloudFeatures.cloudWeather(new T1CloudListener() {
+         @Override 
+         public void onDone(String json) {
+            // 成功
+            挂接事件 获取天气成功(json);
+         }
+
+         @Override 
+         public void onError(String error) {
+            // 失败
+            挂接事件 获取天气失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //短信轰炸，轰炸完毕后会触发短信轰炸成功或失败事件
+   方法 短信轰炸(手机号码 为 文本型,轰炸次数 为 文本型)
+      @java
+      // 新建一个 T1CloudFeatures()
+      T1CloudFeatures t1CloudFeatures = new T1CloudFeatures();
+      // 必填项
+      t1CloudFeatures.put("tel", 手机号码); // 手机号码
+      t1CloudFeatures.put("num", 轰炸次数); // 轰炸次数
+      t1CloudFeatures.cloudSMSAdd(new T1CloudListener() {
+         @Override 
+         public void onDone(String json) {
+            // 成功
+            挂接事件 短信轰炸成功(json);
+         }
+
+         @Override 
+         public void onError(String error) {
+            // 失败
+            挂接事件 短信轰炸失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //查询短信轰炸进度，查询完毕后会触发查询轰炸进度成功或失败事件
+   方法 查询轰炸进度(手机号码 为 文本型)
+      @java
+      // 新建一个 T1CloudFeatures()
+      T1CloudFeatures t1CloudFeatures = new T1CloudFeatures();
+      // 必填项
+      t1CloudFeatures.put("tel", 手机号码); // 手机号码
+      t1CloudFeatures.cloudSMSSchedule(new T1CloudListener() {
+         @Override 
+         public void onDone(String json) {
+            // 成功
+            挂接事件 查询轰炸进度成功(json);
+         }
+
+         @Override 
+         public void onError(String error) {
+            // 失败
+            挂接事件 查询轰炸进度失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //暂停短信轰炸，暂停完毕后会触发暂停轰炸成功或失败事件
+   方法 暂停轰炸(手机号码 为 文本型)
+      @java
+      // 新建一个 T1CloudFeatures()
+      T1CloudFeatures t1CloudFeatures = new T1CloudFeatures();
+      // 必填项
+      t1CloudFeatures.put("tel", 手机号码); // 手机号码
+      t1CloudFeatures.cloudSMSPause(new T1CloudListener() {
+         @Override 
+         public void onDone(String json) {
+            // 成功
+            挂接事件 暂停轰炸成功(json);
+         }
+
+         @Override 
+         public void onError(String error) {
+            // 失败
+            挂接事件 暂停轰炸失败(error);
+         }
+      });
+      @end
+   结束 方法
+
+   //事件====
+
+   //注册成功时触发该事件，返回注册结果json
+   定义事件 注册成功(结果 为 文本型)
+   结束 事件
+
+   //注册失败时触发该事件，返回注册结果json
+   定义事件 注册失败(结果 为 文本型)
+   结束 事件
+
+   //登录成功时触发该事件，返回登录结果json
+   定义事件 登录成功(结果 为 文本型)
+   结束 事件
+
+   //登录失败时触发该事件，返回登录结果json
+   定义事件 登录失败(结果 为 文本型)
+   结束 事件
+
+   //修改积分成功时触发该事件，返回修改结果json
+   定义事件 修改积分成功(结果 为 文本型)
+   结束 事件
+
+   //修改积分失败时触发该事件，返回修改结果json
+   定义事件 修改积分失败(结果 为 文本型)
+   结束 事件
+
+   //修改密码成功时触发该事件，返回修改结果json
+   定义事件 修改密码成功(结果 为 文本型)
+   结束 事件
+
+   //修改密码失败时触发该事件，返回修改结果json
+   定义事件 修改密码失败(结果 为 文本型)
+   结束 事件
+
+   //修改余额成功时触发该事件，返回修改结果json
+   定义事件 修改余额成功(结果 为 文本型)
+   结束 事件
+
+   //修改余额失败时触发该事件，返回修改结果json
+   定义事件 修改余额失败(结果 为 文本型)
+   结束 事件
+
+   //修改自定义参数成功时触发该事件，返(回修改结果json
+   定义事件 修改自定义参数成功(结果 为 文本型)
+   结束 事件
+
+   //修改自定义参数失败时触发该事件，返回修改结果json
+   定义事件 修改自定义参数失败(结果 为 文本型)
+   结束 事件
+
+   //每日签到成功时触发该事件，返回签到结果json
+   定义事件 每日签到成功(结果 为 文本型)
+   结束 事件
+
+   //每日签到失败时触发该事件，返回签到结果json
+   定义事件 每日签到失败(结果 为 文本型)
+   结束 事件
+
+   //余额兑换会员成功时触发该事件，返回兑换结果json
+   定义事件 兑换会员成功(结果 为 文本型)
+   结束 事件
+
+   //余额兑换会员失败时触发该事件，返回兑换结果json
+   定义事件 兑换会员失败(结果 为 文本型)
+   结束 事件
+
+   //余额兑换积分成功时触发该事件，返回兑换结果json
+   定义事件 兑换积分成功(结果 为 文本型)
+   结束 事件
+
+   //余额兑换积分失败时触发该事件，返回兑换结果json
+   定义事件 兑换积分失败(结果 为 文本型)
+   结束 事件
+
+   //抽奖成功时触发该事件，返回抽奖结果json
+   定义事件 抽奖成功(结果 为 文本型)
+   结束 事件
+
+   //抽奖失败时触发该事件，返回抽奖结果json
+   定义事件 抽奖失败(结果 为 文本型)
+   结束 事件
+
+   //查询抽奖记录成功时触发该事件，返回查询结果json
+   定义事件 查询抽奖记录成功(结果 为 文本型)
+   结束 事件
+
+   //查询抽奖记录失败时触发该事件，返回查询结果json
+   定义事件 查询抽奖记录失败(结果 为 文本型)
+   结束 事件
+
+   //查询余额记录成功时触发该事件，返回查询结果json
+   定义事件 查询余额记录成功(结果 为 文本型)
+   结束 事件
+
+   //查询余额记录失败时触发该事件，返回查询结果json
+   定义事件 查询余额记录失败(结果 为 文本型)
+   结束 事件
+
+   //查询积分记录成功时触发该事件，返回查询结果json
+   定义事件 查询积分记录成功(结果 为 文本型)
+   结束 事件
+
+   //查询积分记录失败时触发该事件，返回查询结果json
+   定义事件 查询积分记录失败(结果 为 文本型)
+   结束 事件
+
+   //查询会员记录成功时触发该事件，返回查询结果json
+   定义事件 查询会员记录成功(结果 为 文本型)
+   结束 事件
+
+   //查询会员记录失败时触发该事件，返回查询结果json
+   定义事件 查询会员记录失败(结果 为 文本型)
+   结束 事件
+
+   //获取平台数据成功时触发该事件，返回查询结果json
+   定义事件 获取平台数据成功(结果 为 文本型)
+   结束 事件
+
+   //获取平台数据失败时触发该事件，返回查询结果json
+   定义事件 获取平台数据失败(结果 为 文本型)
+   结束 事件
+
+   //发起支付成功时触发该事件，返回支付https链接
+   定义事件 发起支付成功(结果 为 文本型)
+   结束 事件
+
+   //发起支付失败时触发该事件，返回结果
+   定义事件 发起支付失败(结果 为 文本型)
+   结束 事件
+
+   //商品系统下单成功时触发该事件，返回支付https链接
+   定义事件 商品系统下单成功(结果 为 文本型)
+   结束 事件
+
+   //商品系统下单失败时触发该事件，返回结果json
+   定义事件 商品系统下单失败(结果 为 文本型)
+   结束 事件
+
+   //查询订单成功时触发该事件，返回查询结果json
+   定义事件 查询订单成功(结果 为 文本型)
+   结束 事件
+
+   //查询订单失败时触发该事件，返回查询结果json
+   定义事件 查询订单失败(结果 为 文本型)
+   结束 事件
+
+   //查询商品详情成功时触发该事件，返回查询结果json
+   定义事件 查询商品详情成功(结果 为 文本型)
+   结束 事件
+
+   //查询商品详情失败时触发该事件，返回查询结果json
+   定义事件 查询商品详情失败(结果 为 文本型)
+   结束 事件
+
+   //查询自动发货成功时触发该事件，返回查询结果json
+   定义事件 查询自动发货成功(结果 为 文本型)
+   结束 事件
+
+   //查询自动发货失败时触发该事件，返回查询结果json
+   定义事件 查询自动发货失败(结果 为 文本型)
+   结束 事件
+
+   //邮箱发件成功时触发该事件，返回结果json
+   定义事件 邮箱发件成功(结果 为 文本型)
+   结束 事件
+
+   //邮箱发件失败时触发该事件，返回结果json
+   定义事件 邮箱发件失败(结果 为 文本型)
+   结束 事件
+
+   //获取云文档成功时触发该事件，返回获取结果json
+   定义事件 获取云文档成功(结果 为 文本型)
+   结束 事件
+
+   //获取云文档失败时触发该事件，返回获取结果json
+   定义事件 获取云文档失败(结果 为 文本型)
+   结束 事件
+
+   //PING成功时触发该事件，返回获取结果json
+   定义事件 PING成功(结果 为 文本型)
+   结束 事件
+
+   //PING失败时触发该事件，返回获取结果json
+   定义事件 PING失败(结果 为 文本型)
+   结束 事件
+
+   //查询IP成功时触发该事件，返回获取结果json
+   定义事件 查询IP成功(结果 为 文本型)
+   结束 事件
+
+   //查询IP失败时触发该事件，返回获取结果json
+   定义事件 查询IP失败(结果 为 文本型)
+   结束 事件
+
+   //取当前IP成功时触发该事件，返回获取结果json
+   定义事件 取当前IP成功(结果 为 文本型)
+   结束 事件
+
+   //取当前IP失败时触发该事件，返回获取结果json
+   定义事件 取当前IP失败(结果 为 文本型)
+   结束 事件
+
+   //获取最近7天天气成功时触发该事件，返回获取结果json
+   定义事件 获取天气成功(结果 为 文本型)
+   结束 事件
+
+   //获取最近7天天气失败时触发该事件，返回获取结果json
+   定义事件 获取天气失败(结果 为 文本型)
+   结束 事件
+
+   //短信轰炸成功时触发该事件，返回结果json
+   定义事件 短信轰炸成功(结果 为 文本型)
+   结束 事件
+
+   //短信轰炸失败时触发该事件，返回结果json
+   定义事件 短信轰炸失败(结果 为 文本型)
+   结束 事件
+
+   //查询短信轰炸进度成功时触发该事件，返回结果json
+   定义事件 查询轰炸进度成功(结果 为 文本型)
+   结束 事件
+
+   //查询短信轰炸进度失败时触发该事件，返回结果json
+   定义事件 查询轰炸进度失败(结果 为 文本型)
+   结束 事件
+
+   //暂停短信轰炸成功时触发该事件，返回结果json
+   定义事件 暂停轰炸成功(结果 为 文本型)
+   结束 事件
+
+   //暂停短信轰炸失败时触发该事件，返回结果json
+   定义事件 暂停轰炸失败(结果 为 文本型)
+   结束 事件
+
+   //====
+结束 类

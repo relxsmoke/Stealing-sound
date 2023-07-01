@@ -1,0 +1,41 @@
+{
+   "useDesign": false,
+   "lastModifiedPath": "\/storage\/emulated\/0\/S5droid\/projects\/盗音大师\/src\/主界面.form",
+   "useAndroidx": false,
+   "工程类型": 0,
+   "全局应用": {
+      "图标": "@drawable\/icon",
+      "支持分屏": true,
+      "别名": "MyApplication",
+      "允许备份": false,
+      "全屏显示": true,
+      "主题": "@style\/liang",
+      "标题": "@string\/app_name",
+      "兼容安卓10网络模式": true,
+      "兼容安卓10存储模式": true
+   },
+   "窗口": {
+      "主界面": {
+         "适应屏幕方向改变": true,
+         "别名": "ZhujmActivity",
+         "屏幕方向": "竖屏"
+      },
+      "启动窗口": {
+         "适应屏幕方向改变": true,
+         "别名": "MainActivity",
+         "屏幕方向": "竖屏",
+         "附加数据": "<intent-filter>\n                <action android:name=\"android.intent.action.MAIN\" \/>\n                <category android:name=\"android.intent.category.DEFAULT\" \/>\n                <category android:name=\"android.intent.category.BROWSABLE\" \/>\n                <category android:name=\"android.intent.category.LAUNCHER\" \/>\n            <\/intent-filter>",
+         "标题": "@string\/app_name"
+      },
+      "关于": {
+         "别名": "GuanyActivity",
+         "屏幕方向": "竖屏",
+         "适应屏幕方向改变": true
+      },
+      "使用帮助": {
+         "别名": "ShiybzActivity",
+         "屏幕方向": "竖屏",
+         "适应屏幕方向改变": true
+      }
+   }
+}

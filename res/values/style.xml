@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<resources>
+	<style name="liang" parent="@android:style/Theme.Material.Light">
+		<item name="android:colorPrimary">#FFFFFFFF</item>
+	</style>
+	<style name="an" parent="@android:style/Theme.Material">
+		<item name="android:colorPrimary">#FF212121</item>
+	</style>
+
+</resources>

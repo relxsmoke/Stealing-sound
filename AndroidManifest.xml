@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manifest
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	package="com.daoyin.zero">
+	<application
+		android:icon="@drawable/icon"
+		android:resizeableActivity="true"
+		android:name=".MyApplication"
+		android:allowBackup="false"
+		android:supportsRtl="true"
+		android:theme="@style/liang"
+		android:label="@string/app_name"
+		android:requestLegacyExternalStorage="true"
+		android:usesCleartextTraffic="true">
+		<activity
+			android:configChanges="orientation|screenSize|keyboardHidden"
+			android:name=".GuanyActivity"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:configChanges="orientation|screenSize|keyboardHidden"
+			android:name=".ShiybzActivity"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:configChanges="orientation|screenSize|keyboardHidden"
+			android:name=".ZhujmActivity"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:configChanges="orientation|screenSize|keyboardHidden"
+			android:name=".MainActivity"
+			android:screenOrientation="portrait"
+			android:label="@string/app_name">
+			<intent-filter>
+				<action
+					android:name="android.intent.action.MAIN"/>
+				<category
+					android:name="android.intent.category.DEFAULT"/>
+				<category
+					android:name="android.intent.category.BROWSABLE"/>
+				<category
+					android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+	</application>
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+</manifest>
