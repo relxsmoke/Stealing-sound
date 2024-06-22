@@ -2,7 +2,7 @@
 
 2把后缀改为".s5d"
 
-3下载[结绳](https://zhongcheng.lanzoue.com/iPzxH1100brg)
+3下载[结绳](https://qm.qq.com/q/nhb2jhrEoU)
 
 4导入".s5d"文件
 
